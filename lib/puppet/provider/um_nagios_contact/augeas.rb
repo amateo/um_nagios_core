@@ -68,15 +68,6 @@ Puppet::Type.type(:um_nagios_contact).provide(:augeas, :parent => Puppet::Type.t
     aug.rm(resource_path(resource))
   end
 
-  def service_notification_options=(value)
-    augopen! do |aug|
-      if value.empty? then
-        aug.rm("#{resource_path}/service_notification_options")
-      else
-        aug.set("#{resource_path}/service_notification_options", "#{value}")
-      end
-    end
-  end
 
   def contactgroups
     values = []
@@ -214,15 +205,11 @@ Puppet::Type.type(:um_nagios_contact).provide(:augeas, :parent => Puppet::Type.t
                     :type => :string,
                    )
 
-  attr_aug_reader(:service_notification_options,
+  attr_aug_accessor(:service_notification_options,
                     :label => 'service_notification_options',
-                    :type => :string,
+                    :type => :array,
+                    :split_by => ',',
                    )
-  #attr_aug_accessor(:service_notification_options,
-  #                  :label => 'service_notification_options',
-  #                  :type => :string,
-  #                  :rm_node => true,
-  #                 )
 
   attr_aug_accessor(:service_notification_period,
                     :label => 'service_notification_period',

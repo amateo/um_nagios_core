@@ -19,8 +19,8 @@ um_nagios_contact {'fulanito':
   email                         => 'fulanito@um.es',
   can_submit_commands           => 1,
   retain_nonstatus_information  => 1,
-  #service_notification_options => 'w,c',
-  service_notification_options  => '',
+  #service_notification_options => ['w', 'c'],
+  service_notification_options  => [],
   #host_notification_commands   => undef,
   host_notification_commands    => 'command1',
 }
