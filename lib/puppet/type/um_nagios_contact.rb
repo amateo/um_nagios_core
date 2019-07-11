@@ -118,20 +118,13 @@ Puppet::Type.newtype(:um_nagios_contact) do
     desc 'Nagios configuration file parameter.'
   end
 
-  newproperty(:service_notification_options) do
+  newproperty(:service_notification_options, :array_matching => :all) do
     desc 'Nagios configuration file parameter.'
-    validate do |value|
-      if !value.match?(/^([wucrfsn](,[wucrfsn])*)?$/) then
-        raise ArgumentError, "service_notification_options must be a comma separated list of 'w', 'u', 'c', 'r', 'f', 's', 'n' (#{value} provided)"
-      end
-    end
+    newvalues('w', 'u', 'c', 'r', 'f', 's', 'n')
 
     def insync?(is)
-      if is == nil then
-        should == ''
-      else
-        is == should
-      end
+      return false if should == [] and is != []
+      super
     end
   end
 
